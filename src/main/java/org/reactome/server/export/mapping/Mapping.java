@@ -44,7 +44,7 @@ public class Mapping {
             for (String type : Arrays.asList("LLP", "all pathways", "reactions")) {
                 Result result = null;
                 List<String> attr = null;
-                String fileName = resource.name + "2Reactome";
+                String fileName = resource.name + "2PlantReactome";
                 if(verbose) System.out.print("\rRunning " + resource.name + " mapping for " + type + " [" + ++current + " of " + size + "]");
                 switch (type) {
                     case "LLP":
@@ -89,7 +89,7 @@ public class Mapping {
                 } else if (attribute.equals("Link")) {
                     String link = (String) map.get("Pathway_ID");
                     link = link != null ? link : (String) map.get("Reaction_ID");
-                    line.add("http://reactome.org/PathwayBrowser/#/" + link);
+                    line.add("http://plantreactome.gramene.org/PathwayBrowser/#/" + link);
                 } else if (attribute.equals("Evidence_Code")) {
                     line.add(((Boolean) map.get(attribute)) ? "IEA" : "TAS");
                 } else {
