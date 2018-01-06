@@ -3,6 +3,7 @@ package org.reactome.server.export;
 import com.martiansoftware.jsap.*;
 import org.reactome.server.export.config.ReactomeNeo4jConfig;
 import org.reactome.server.export.mapping.Mapping;
+import org.reactome.server.export.opentargets.OpenTargetsExporter;
 import org.reactome.server.export.tasks.common.DataExport;
 import org.reactome.server.graph.service.GeneralService;
 import org.reactome.server.graph.utils.ReactomeGraphCore;
@@ -39,25 +40,25 @@ public class Main {
         //Initialising ReactomeCore Neo4j configuration
         ReactomeGraphCore.initialise(config.getString("host"), config.getString("port"), config.getString("user"), config.getString("password"), ReactomeNeo4jConfig.class);
 
-        GeneralService genericService = ReactomeGraphCore.getService(GeneralService.class);
+        GeneralService generalService = ReactomeGraphCore.getService(GeneralService.class);
 
         String task = config.getString("task");
         Reflections reflections = new Reflections("org.reactome.server.export.tasks");
         Set<Class<?>> tests = reflections.getTypesAnnotatedWith(org.reactome.server.export.annotations.DataExport.class);
 
         String path = config.getString("output");
-        if(!path.endsWith("/")) path += "/";
+        if (!path.endsWith("/")) path += "/";
 
         boolean verbose = config.getBoolean("verbose");
 
         /*############ IMPORTANT ############
-        The export is divided in two sections:
+        The export is divided in three sections:
             1) Generic Mapping Files -> A set of files per resource identifier pointing to different levels of Events
             2) On demand exports -> Based on users *interensting* requests, different files are generated
         ###################################*/
 
         //Only run the mapping if a specific task has not been specified
-        if(task == null) Mapping.run(genericService, path, verbose);
+        if (task == null) Mapping.run(generalService, path, verbose);
 
         int n = tests.size(), i = 1, count = 0;
         for (Class test : tests) {
@@ -69,15 +70,18 @@ public class Main {
                         if (task == null) System.out.print("\rRunning task " + dataExport.getName() + " [" + (i++) + " of " + n + "]");
                         else System.out.println("Running task " + dataExport.getName());
                     }
-                    if (dataExport.run(genericService, path)) count++;
+                    if (dataExport.run(generalService, path)) count++;
                 }
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-        if (verbose) {
-            if (task == null) System.out.println("\rTasks finished. " + count + " files has been generated.\n\nPlease ensure the files are available for download.");
-            else System.out.println("Task finished.");
+        if (verbose && task == null) {
+            System.out.println("\rTasks finished. " + count + " files has been generated.\n\nPlease ensure the files are available for download.");
+        }
+
+        if (task != null && task.equals("OpenTargetsExporter")) {
+            OpenTargetsExporter.export(path, verbose);
         }
     }
 }
