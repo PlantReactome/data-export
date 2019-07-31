@@ -139,13 +139,19 @@ public class Mapping {
             for (String attribute : attributes) {
                 if (attribute.equals("Identifier")) {
                     String id = (String) map.get("variant" + attribute);
-                    line.add(id != null ? id : (String) map.get(attribute));
+                    String attr = (String) map.get(attribute);
+                    if (id != null)
+                        line.add(id);
+                    else if (attr != null)
+                        line.add(attr);
+                    else
+                        line.add("missing");
                 } else if (attribute.equals("Link")) {
                     String link = (String) map.get("Pathway_ID");
                     link = link != null ? link : (String) map.get("Reaction_ID");
-                    line.add("http://plantreactome.gramene.org/PathwayBrowser/#/" + link);
+                    line.add("https://plantreactome.gramene.org/PathwayBrowser/#/" + link);
                 } else if (attribute.equals("Evidence_Code")) {
-                    line.add(((Boolean) map.get(attribute)) ? "IEA" : "TAS");
+                    line.add(((Boolean) map.get(attribute)) ? "none" : "TAS");
                 } else {
                     Object aux = map.get(attribute);
                     // Some results might be list of elements. In this case we use UNWIND and the output looks like

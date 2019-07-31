@@ -9,7 +9,7 @@ abstract class MappingQueries {
         return " MATCH (rd:ReferenceDatabase)<-[:referenceDatabase]-(n) " +
                 "WHERE rd.displayName =~ \"" + resource + "\" " +
                 "WITH DISTINCT n " +
-                "MATCH (n)<-[:referenceEntity|referenceSequence|crossReference|referenceGene*]-(pe:PhysicalEntity) " +
+                "MATCH (n)<-[:referenceEntity|referenceSequence|referenceGene*]-(pe:PhysicalEntity) " +
                 "WITH DISTINCT n, pe " +
                 "MATCH (pe)<-[:input|output|catalystActivity|entityFunctionalStatus|physicalEntity|regulatedBy|regulator|hasComponent|hasMember|hasCandidate|repeatedUnit*]-(rle:ReactionLikeEvent) " +
                 "WITH n, COLLECT(DISTINCT rle) AS rles " + //At this point we need to narrow down the found RLES by taking each one only once and then
@@ -28,7 +28,7 @@ abstract class MappingQueries {
         return " MATCH (rd:ReferenceDatabase)<-[:referenceDatabase]-(n) " +
                 "WHERE rd.displayName =~ \"" + resource + "\" " +
                 "WITH DISTINCT n " +
-                "MATCH (n)<-[:referenceEntity|referenceSequence|crossReference|referenceGene*]-(pe:PhysicalEntity) " +
+                "MATCH (n)<-[:referenceEntity|referenceSequence|referenceGene*]-(pe:PhysicalEntity) " +
                 "WITH DISTINCT n, pe " +
                 "MATCH (pe)<-[:input|output|catalystActivity|entityFunctionalStatus|physicalEntity|regulatedBy|regulator|hasComponent|hasMember|hasCandidate|repeatedUnit*]-(rle:ReactionLikeEvent) " +
                 "WITH DISTINCT n, rle " +
@@ -46,7 +46,7 @@ abstract class MappingQueries {
         return " MATCH (rd:ReferenceDatabase)<-[:referenceDatabase]-(n) " +
                 "WHERE rd.displayName =~ \"" + resource + "\" " +
                 "WITH DISTINCT n " +
-                "MATCH (n)<-[:referenceEntity|referenceSequence|crossReference|referenceGene*]-(pe:PhysicalEntity) " +
+                "MATCH (n)<-[:referenceEntity|referenceSequence|referenceGene*]-(pe:PhysicalEntity) " +
                 "WITH DISTINCT n, pe " +
                 "MATCH (pe)<-[:input|output|catalystActivity|entityFunctionalStatus|physicalEntity|regulatedBy|regulator|hasComponent|hasMember|hasCandidate|repeatedUnit*]-(rle:ReactionLikeEvent) " +
                 "RETURN DISTINCT n.identifier AS Identifier," +
@@ -64,7 +64,7 @@ abstract class MappingQueries {
         return " MATCH (rd:ReferenceDatabase)<-[:referenceDatabase]-(n) " +
                 "WHERE rd.displayName =~ \"" + resource + "\" " +
                 "WITH DISTINCT n " +
-                "MATCH (n)<-[:referenceEntity|referenceSequence|crossReference|referenceGene*]-(pe:PhysicalEntity) " +
+                "MATCH (n)<-[:referenceEntity|referenceSequence|referenceGene*]-(pe:PhysicalEntity) " +
                 "WITH DISTINCT n, pe " +
                 "MATCH (pe)<-[:input|output|catalystActivity|entityFunctionalStatus|physicalEntity|regulatedBy|regulator|hasComponent|hasMember|hasCandidate|repeatedUnit*]-(rle:ReactionLikeEvent) " +
                 "WITH DISTINCT n, pe, rle " +
@@ -84,7 +84,7 @@ abstract class MappingQueries {
         return " MATCH (rd:ReferenceDatabase)<-[:referenceDatabase]-(n) " +
                 "WHERE rd.displayName =~ \"" + resource + "\" " +
                 "WITH DISTINCT n " +
-                "MATCH (n)<-[:referenceEntity|referenceSequence|crossReference|referenceGene*]-(pe:PhysicalEntity) " +
+                "MATCH (n)<-[:referenceEntity|referenceSequence|referenceGene*]-(pe:PhysicalEntity) " +
                 "WITH DISTINCT n, pe " +
                 "MATCH (pe)<-[:input|output|catalystActivity|entityFunctionalStatus|physicalEntity|regulatedBy|regulator|hasComponent|hasMember|hasCandidate|repeatedUnit*]-(rle:ReactionLikeEvent) " +
                 "WITH DISTINCT n, pe, rle " +
@@ -104,7 +104,7 @@ abstract class MappingQueries {
         return " MATCH (rd:ReferenceDatabase)<-[:referenceDatabase]-(n) " +
                 "WHERE rd.displayName =~ \"" + resource + "\" " +
                 "WITH DISTINCT n " +
-                "MATCH (n)<-[:referenceEntity|referenceSequence|crossReference|referenceGene*]-(pe:PhysicalEntity) " +
+                "MATCH (n)<-[:referenceEntity|referenceSequence|referenceGene*]-(pe:PhysicalEntity) " +
                 "WITH DISTINCT n, pe " +
                 "MATCH (pe)<-[:input|output|catalystActivity|entityFunctionalStatus|physicalEntity|regulatedBy|regulator|hasComponent|hasMember|hasCandidate|repeatedUnit*]-(rle:ReactionLikeEvent) " +
                 "RETURN DISTINCT n.identifier AS Identifier," +
